@@ -1,8 +1,15 @@
 import pandas as pd
 from urllib.parse import urlparse
 
-INPUT_FILE = ".csv" # YOUR FILE HERE
-OUTPUT_FILE = ".csv" # file to save to, e.g. "shopify_redirects.csv"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+WEB_URL = os.getenv("WEB_URL", "https://example.com") 
+
+INPUT_FILE = os.getenv("INPUT_FILE", "data/input/products.csv")
+OUTPUT_FILE = os.getenv("OUTPUT_FILE", "data/output/shopify_redirects.csv")
 
 df = pd.read_csv(INPUT_FILE, dtype=str).fillna("")
 
@@ -18,7 +25,7 @@ for _, row in df.iterrows():
 
     # Make sure urlparse gets a full URL
     if not parent_url.startswith("http"):
-        full_url = "https://www.westwoodsfootwear.co.uk" + parent_url
+        full_url = WEB_URL + parent_url
     else:
         full_url = parent_url
 

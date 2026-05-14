@@ -1,0 +1,9 @@
+.env
+.env.*
+
+data/input/
+data/output/
+data/private/
+
+*.csv
+!data/examples/*.csv

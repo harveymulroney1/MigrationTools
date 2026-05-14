@@ -2,7 +2,12 @@ import pandas as pd
 import re
 from urllib.parse import urlparse
 
-web_url = "https://www.YOURSTORE.co.uk"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+WEB_URL = os.getenv("WEB_URL", "https://example.com") 
 
 INPUT_FILE = "input.csv" # input file
 OUTPUT_FILE = "output.csv" # output file
@@ -24,7 +29,7 @@ def make_handle(parent_url, parent_ref, parent_id):
 
     if parent_url:
         if not parent_url.startswith("http"):
-            parent_url = web_url + parent_url
+            parent_url = WEB_URL + parent_url
         path = urlparse(parent_url).path.strip("/")
         if path:
             return path.split("/")[-1].lower()
@@ -64,6 +69,7 @@ def build_title(brand, raw_title):
 
     return f"{brand} {raw_title}"
 # for meta fields - converts to this format:
+# change this for your usecase for Google Fields Mapping
 def map_category(cat):
     if "slipper" in cat.lower():
         return "Apparel & Accessories > Shoes > Slippers"
